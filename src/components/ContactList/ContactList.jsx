@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 
-// import PropTypes from 'prop-types';
 import { ListContacts, ContactsItem, DeleteBtn } from './ContactList.styled';
 
 export default function ContactList() {
