@@ -25,9 +25,9 @@ export default function ContactList() {
 
   return (
     <ListContacts>
-      {filteredContactList.map(({ name, number, id }) => (
+      {filteredContactList.map(({ name, phone, id }) => (
         <ContactsItem key={id}>
-          {name + ' : ' + number}
+          {name + ' : ' + phone}
           {
             <DeleteBtn
               type="button"
@@ -42,16 +42,3 @@ export default function ContactList() {
     </ListContacts>
   );
 }
-
-// ContactList.propTypes = {
-//   onDeleteContact: PropTypes.func.isRequired,
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-// };
-
-// export default ContactList;

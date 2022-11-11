@@ -1,18 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
-import { getContacts } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+import { addContact, fetchContacts } from 'redux/operations';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-// import PropTypes from 'prop-types';
+
 import { Form, AddBtn, InputData, LabelData } from './ContactForm.styled';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -22,8 +24,8 @@ export default function ContactForm() {
         setName(value);
         break;
 
-      case 'number':
-        setNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
 
       default:
@@ -34,30 +36,13 @@ export default function ContactForm() {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const newElement = { id: nanoid(), name, number };
-
-    const action = addContact(newElement);
-
-    const findName = contacts.find(
-      contact =>
-        contact.name.toLowerCase() === action.payload.name.toLowerCase()
-    );
-
-    if (findName) {
-      alert(`${action.payload.name} is already in your contacts list`, {
-        autoClose: 1000,
-      });
-      reset();
-      return;
-    }
-
-    dispatch(action);
+    dispatch(addContact({ id: nanoid(), name, phone }));
     reset();
   };
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -78,11 +63,11 @@ export default function ContactForm() {
         Number
         <InputData
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
+          value={phone}
           onChange={handleChange}
         />
       </LabelData>
@@ -90,7 +75,3 @@ export default function ContactForm() {
     </Form>
   );
 }
-
-// ContactForm.propTypes = {
-//   addContact: PropTypes.func.isRequired,
-// };

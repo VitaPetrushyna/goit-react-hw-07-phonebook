@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setFilter } from '../../redux/filterSlice';
 import { getFilter } from '../../redux/selectors';
 
-// import PropTypes from 'prop-types';
 import { FindLabel, FindInput } from './Filter.styled';
 
 const Filter = () => {
@@ -28,10 +27,5 @@ const Filter = () => {
     </FindLabel>
   );
 };
-
-// Filter.propTypes = {
-//   onChange: PropTypes.func.isRequired,
-//   value: PropTypes.string.isRequired,
-// };
 
 export default Filter;
